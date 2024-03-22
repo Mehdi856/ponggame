@@ -181,13 +181,22 @@ function moveBall(){
     if(ball.y+ ball.size>700){
         ball.dy *= -1
     }
-    if((ball.x+ ball.size>rightBar.x) && (ball.y+ ball.size-rightBar.y<80)){
-        ball.dx *= -1
-    }/*
-    if(ball.x+ ball.size>leftBar.x+15 && ball.y+ ball.size>leftBar.y){
-        ball.dx *= -1
-    }*/
+
+    detectRightBar()
+    detectLeftBar()
+    
 
     requestAnimationFrame(moveBall)
+}
+
+function detectRightBar(){
+    if((ball.x+ ball.size>rightBar.x) && ((ball.y+ ball.size>rightBar.y)&&(ball.y+ball.size<=rightBar.y+80))){
+        ball.dx *= -1
+    }
+}
+function detectLeftBar(){
+    if((ball.x-ball.size<leftBar.x +15) && ((ball.y+ ball.size>leftBar.y)&&(ball.y+ball.size<=leftBar.y+80))){
+        ball.dx *= -1
+    }
 }
 moveBall()
