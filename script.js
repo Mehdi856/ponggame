@@ -152,10 +152,10 @@ document.addEventListener('keyup', keyUpL)
 
 // the ball
 let ball = {
-    x : 200,
-    y : 600,
+    x : canvas.width / 2,
+    y : canvas.height / 2,
     size : 15,
-    dx : 3,
+    dx : 7,
     dy : 2
 }
 function drawBall(){
@@ -175,7 +175,7 @@ function moveBall(){
     ball.x += ball.dx
     ball.y += ball.dy
 
-    if(ball.y + ball.size<0){
+    if(ball.y -ball.size<0){
         ball.dy *= -1
     }
     if(ball.y+ ball.size>700){
@@ -185,18 +185,45 @@ function moveBall(){
     detectRightBar()
     detectLeftBar()
     
+    rightGuyScore()
+    leftGuyScore()
+    
 
     requestAnimationFrame(moveBall)
 }
 
 function detectRightBar(){
-    if((ball.x+ ball.size>rightBar.x) && ((ball.y+ ball.size>rightBar.y)&&(ball.y+ball.size<=rightBar.y+80))){
+    if((ball.x+ ball.size>rightBar.x) && ((ball.y>rightBar.y)&&(ball.y<=rightBar.y+80))){
         ball.dx *= -1
     }
 }
 function detectLeftBar(){
-    if((ball.x-ball.size<leftBar.x +15) && ((ball.y+ ball.size>leftBar.y)&&(ball.y+ball.size<=leftBar.y+80))){
+    if((ball.x-ball.size<leftBar.x +15) && ((ball.y>leftBar.y)&&(ball.y<=leftBar.y+80))){
         ball.dx *= -1
+    } 
+}
+function rightGuyScore(){
+    if(ball.x-ball.size<0){
+        rightScore += 1
+        reset()
+        
     }
 }
+function leftGuyScore(){
+    if(ball.x+ball.size>canvas.width){
+        leftScore += 1
+        reset()
+    }
+}
+
+function reset(){
+    ball.x = canvas.width / 2
+    ball.y = canvas.height / 2
+    ball.dx *= -1
+    rightBar.y = (canvas.height +80) /2
+    leftBar.y = (canvas.height +80) /2
+    rightBar.dy = 0
+    leftBar.dy = 0
+}
+
 moveBall()
